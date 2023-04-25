@@ -2,7 +2,7 @@ let balls = [];
 
 function setup(){
     createCanvas(windowWidth,windowHeight);
-    for (let i = 0; i < 75; i++) {
+    for (let i = 0; i < 80; i++) {
         balls.push(new Ball());
     }
 }
@@ -13,8 +13,6 @@ function draw(){
         for (let j = i + 1; j < balls.length; j++) {
             if (balls[i].checkCollision(balls[j])) {
                 balls[i].collide(balls[j]);
-                balls[i].update();
-                balls[j].update();  
             }
         }
     }
