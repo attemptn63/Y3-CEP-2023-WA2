@@ -1,7 +1,7 @@
-let balls = [], ballcnt = 80;
+let balls = [], ballcnt = 80,prevBallcnt = 80;
 let settingsImg, settingsOpen = false, exitSettings;
 let ballcntSlider,backgroundColorPicker,backgroundColor = [0,0,0];
-let settingWindowSize = 350;
+let settingWindowSize = 330;
 function preload(){
     settingsImg = loadImage('assets/gear.png');
     exitSettings = loadImage('assets/close_window.png');
@@ -40,17 +40,20 @@ function mousePressed(){
     if(!settingsOpen && mouseX > windowWidth*33/35 && mouseX < windowWidth*33/35 + windowHeight*7/75 && mouseY > windowHeight/75 && mouseY < windowHeight/75 + windowHeight*7/75){
         settingsOpen = true;
         ballcntSlider = createSlider(5, 120, ballcnt,5);
-        ballcntSlider.position(windowWidth/2 - 350/2 + 50, windowHeight/2 - 350/2 + 30);
+        ballcntSlider.position(windowWidth/2 - 350/2 + 50, windowHeight/2 - 350/2 + 100);
         ballcntSlider.style('width','250px');
-        backgroundColorPicker = createColorPicker(color(backgroundColor[0],backgroundColor[1],backgroundColor[2]));
-        backgroundColorPicker.position(windowWidth/2 - 350/2 + 50, windowHeight/2 - 350/2 + 100);
+        backgroundColorPicker = createColorPicker(backgroundColor);
+        backgroundColorPicker.position(windowWidth/2 - 350/2 + 50, windowHeight/2 - 350/2 + 220);
         backgroundColorPicker.style('width','250px');
     }
     if(settingsOpen && dist(mouseX, mouseY, windowWidth/2 + settingWindowSize/2 - 45 + 50/2, windowHeight/2 - settingWindowSize/2 - 5 + 50/2) < 50/2 + 5){
         settingsOpen = false;
         ballcntSlider.remove();
         backgroundColorPicker.remove();
-        setup();
+        if(ballcnt != prevBallcnt){
+            setup();
+        }
+        prevBallcnt = ballcnt;
     }
 }
 function displaySettings(){
@@ -67,15 +70,15 @@ function createBallSlider(){
     textSize(20);
     textAlign(CENTER);
     fill(0);    
-    text('Number of Balls', windowWidth/2, windowHeight/2 - settingWindowSize/2 + 20);
+    text('Number of Balls', windowWidth/2, windowHeight/2 - settingWindowSize/2 + 80);
     ballcnt = ballcntSlider.value();
-    text(ballcnt, windowWidth/2, windowHeight/2 - settingWindowSize/2 + 60);
+    text(ballcnt, windowWidth/2, windowHeight/2 - settingWindowSize/2 + 120);
 }
 function createBackgroundColorPicker(){
     textFont('Inconsolata');
     textSize(20);
     textAlign(CENTER);
     fill(0);    
-    text('Background Color', windowWidth/2, windowHeight/2 - settingWindowSize/2 + 90);
+    text('Background Color', windowWidth/2, windowHeight/2 - settingWindowSize/2 + 200);
     backgroundColor = backgroundColorPicker.color();
 }
